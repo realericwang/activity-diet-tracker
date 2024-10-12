@@ -36,7 +36,7 @@ export default function AddActivityScreen({ navigation }) {
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const formatDateWithDay = (date) => {
-    return format(date, "yyyy-MM-dd EEEE");
+    return format(date, "yyyy-MM-dd EEE");
   };
 
   const handleSave = () => {
@@ -69,80 +69,106 @@ export default function AddActivityScreen({ navigation }) {
     <View
       style={[
         commonStyles.container,
+        styles.formContainer,
         { backgroundColor: theme.backgroundColor },
       ]}
     >
-      <DropDownPicker
-        open={open}
-        value={activityType}
-        items={activityTypes}
-        setOpen={setOpen}
-        setValue={setActivityType}
-        style={[styles.dropdown, { backgroundColor: theme.itemBackground }]}
-        textStyle={{ color: theme.textColor }}
-        dropDownContainerStyle={{ backgroundColor: theme.itemBackground }}
-      />
-
-      <TextInput
-        style={[
-          styles.input,
-          { backgroundColor: theme.itemBackground, color: theme.textColor },
-        ]}
-        placeholder="Duration (minutes)"
-        placeholderTextColor={theme.secondaryColor}
-        value={duration}
-        onChangeText={setDuration}
-        keyboardType="default"
-      />
-
-      <TouchableOpacity
-        style={[styles.input, { backgroundColor: theme.itemBackground }]}
-        onPress={() => setShowDatePicker(true)}
-      >
-        <Text style={{ color: theme.textColor }}>
-          {formatDateWithDay(date)}
-        </Text>
-      </TouchableOpacity>
-
-      {showDatePicker && (
-        <DateTimePicker
-          value={date}
-          mode="date"
-          display="inline"
-          onChange={(event, selectedDate) => {
-            setShowDatePicker(false);
-            if (selectedDate) {
-              setDate(selectedDate);
-            }
-          }}
+      <View style={styles.formContent}>
+        <Text style={[styles.label, { color: theme.textColor }]}>Activity *</Text>
+        <DropDownPicker
+          open={open}
+          value={activityType}
+          items={activityTypes}
+          setOpen={setOpen}
+          setValue={setActivityType}
+          style={[styles.dropdown, { backgroundColor: theme.itemBackground }]}
+          textStyle={{ color: theme.textColor }}
+          dropDownContainerStyle={{ backgroundColor: theme.itemBackground }}
+          placeholder="Select an activity"
+          placeholderStyle={{ color: theme.secondaryColor }}
         />
-      )}
 
-      <View style={styles.buttonContainer}>
+        <Text style={[styles.label, { color: theme.textColor }]}>Duration (min) *</Text>
+        <TextInput
+          style={[
+            styles.input,
+            { backgroundColor: theme.itemBackground, color: theme.textColor },
+          ]}
+          placeholderTextColor={theme.secondaryColor}
+          value={duration}
+          onChangeText={setDuration}
+          keyboardType="default"
+        />
+
+        <Text style={[styles.label, { color: theme.textColor }]}>Date *</Text>
         <TouchableOpacity
-          style={[styles.button, { backgroundColor: theme.secondaryColor }]}
-          onPress={() => navigation.goBack()}
+          style={[
+            styles.input,
+            styles.dateInput,
+            { backgroundColor: theme.itemBackground },
+          ]}
+          onPress={() => setShowDatePicker(true)}
         >
-          <Text style={[styles.buttonText, { color: theme.backgroundColor }]}>
-            Cancel
+          <Text style={[styles.dateText, { color: theme.textColor }]}>
+            {formatDateWithDay(date)}
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: theme.primaryColor }]}
-          onPress={handleSave}
-        >
-          <Text style={[styles.buttonText, { color: theme.backgroundColor }]}>
-            Save
-          </Text>
-        </TouchableOpacity>
+
+        {showDatePicker && (
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display="inline"
+            onChange={(event, selectedDate) => {
+              setShowDatePicker(false);
+              if (selectedDate) {
+                setDate(selectedDate);
+              }
+            }}
+          />
+        )}
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={[styles.button, { backgroundColor: theme.secondaryColor }]}
+            onPress={() => navigation.goBack()}
+          >
+            <Text style={[styles.buttonText, { color: theme.backgroundColor }]}>
+              Cancel
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, { backgroundColor: theme.primaryColor }]}
+            onPress={handleSave}
+          >
+            <Text style={[styles.buttonText, { color: theme.backgroundColor }]}>
+              Save
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  formContainer: {
+    justifyContent: 'flex-start',
+    paddingTop: 50,
+  },
+  formContent: {
+    width: '100%',
+    alignItems: 'flex-start',
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 5,
+    alignSelf: "flex-start",
+  },
   dropdown: {
     marginBottom: 20,
+    width: "100%",
   },
   input: {
     width: "100%",
@@ -152,6 +178,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 20,
+  },
+  dateInput: {
+    justifyContent: "center",
+  },
+  dateText: {
+    textAlign: "left",
   },
   buttonContainer: {
     flexDirection: "row",
