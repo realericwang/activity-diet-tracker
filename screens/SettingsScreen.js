@@ -8,13 +8,19 @@ export default function SettingsScreen() {
   const theme = isDarkMode ? darkTheme : lightTheme;
 
   return (
-    <View style={[commonStyles.container, { backgroundColor: theme.backgroundColor }]}>
-      <Text style={[commonStyles.title, { color: theme.textColor }]}>Settings</Text>
+    <View
+      style={[
+        commonStyles.container,
+        { backgroundColor: theme.backgroundColor },
+      ]}
+    >
       <TouchableOpacity
         style={[commonStyles.button, { backgroundColor: theme.primaryColor }]}
         onPress={toggleTheme}
       >
-        <Text style={[commonStyles.buttonText, { color: theme.backgroundColor }]}>
+        <Text
+          style={[commonStyles.buttonText, { color: theme.backgroundColor }]}
+        >
           Toggle Theme
         </Text>
       </TouchableOpacity>
