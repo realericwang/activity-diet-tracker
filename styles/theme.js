@@ -1,6 +1,6 @@
 export const lightTheme = {
   backgroundColor: '#eaeaea',
-  textColor: '#000000',
+  textColor: '#393e46',
   primaryColor: '#007AFF',
   secondaryColor: '#8E8E93',
   itemBackground: '#F2F2F7',
@@ -8,7 +8,7 @@ export const lightTheme = {
 
 export const darkTheme = {
   backgroundColor: '#393e46',
-  textColor: '#FFFFFF',
+  textColor: '#dbe2ef',
   primaryColor: '#0A84FF',
   secondaryColor: '#8E8E93',
   itemBackground: '#2C2C2E',

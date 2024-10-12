@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from "@expo/vector-icons";
 import { useActivities } from "../contexts/ActivityContext";
 import { useDiet } from "../contexts/DietContext";
 import { useTheme } from "../contexts/ThemeContext";
@@ -15,18 +15,26 @@ const ItemsList = ({ type }) => {
 
   const renderItem = ({ item }) => (
     <View style={[styles.item, { backgroundColor: theme.itemBackground }]}>
-      <View style={styles.itemHeader}>
-        <Text style={[styles.itemName, { color: theme.textColor }]}>{item.name}</Text>
+      <View style={styles.itemContent}>
+        <Text style={[styles.itemName, { color: theme.textColor }]}>
+          {item.name}
+        </Text>
+        <Text style={[styles.itemDate, { color: theme.secondaryColor }]}>
+          {item.date}
+        </Text>
+        <Text style={[styles.itemDetail, { color: theme.textColor }]}>
+          {type === "activities"
+            ? `${item.duration}`
+            : `Calories: ${item.calories}`}
+        </Text>
         {type === "activities" && item.isSpecial && (
-          <MaterialIcons name="warning-amber" size={24} color={theme.primaryColor} />
+          <MaterialIcons
+            name="warning-amber"
+            size={24}
+            color={theme.primaryColor}
+          />
         )}
       </View>
-      <Text style={[styles.itemDate, { color: theme.secondaryColor }]}>{item.date}</Text>
-      <Text style={[styles.itemDetail, { color: theme.textColor }]}>
-        {type === "activities"
-          ? `Duration: ${item.duration}`
-          : `Calories: ${item.calories}`}
-      </Text>
     </View>
   );
 
@@ -50,22 +58,24 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 5,
   },
+  itemContent: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   itemName: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
+    flex: 2,
   },
   itemDate: {
     fontSize: 14,
-    marginTop: 4,
+    flex: 3,
+    textAlign: "left",
   },
   itemDetail: {
     fontSize: 14,
-    marginTop: 4,
-  },
-  itemHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flex: 1.5,
+    textAlign: "right",
   },
 });
 
