@@ -23,9 +23,7 @@ const ItemsList = ({ type }) => {
           {item.date}
         </Text>
         <Text style={[styles.itemDetail, { color: theme.textColor }]}>
-          {type === "activities"
-            ? `${item.duration}`
-            : `Calories: ${item.calories}`}
+          {type === "activities" ? `${item.duration}` : `${item.calories}`}
         </Text>
         {type === "activities" && item.isSpecial && (
           <MaterialIcons

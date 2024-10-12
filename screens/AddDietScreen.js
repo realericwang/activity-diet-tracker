@@ -6,16 +6,17 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  ScrollView,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useTheme } from "../contexts/ThemeContext";
 import { useDiet } from "../contexts/DietContext";
-import { lightTheme, darkTheme, commonStyles } from "../styles/theme";
+import { lightTheme, darkTheme } from "../styles/theme";
 
 export default function AddDietScreen({ navigation }) {
   const { isDarkMode } = useTheme();
   const theme = isDarkMode ? darkTheme : lightTheme;
-  const { dietItems, setDietItems } = useDiet();
+  const { addDietItem } = useDiet();
 
   const [name, setName] = useState("");
   const [calories, setCalories] = useState("");
@@ -35,92 +36,106 @@ export default function AddDietScreen({ navigation }) {
     }
 
     const newDietItem = {
-      id: dietItems.length + 1,
+      id: Date.now(),
       name,
       calories: caloriesNum,
       date: date.toISOString().split("T")[0],
     };
 
-    setDietItems([...dietItems, newDietItem]);
+    addDietItem(newDietItem);
     navigation.goBack();
   };
 
   return (
-    <View
-      style={[
-        commonStyles.container,
+    <ScrollView
+      contentContainerStyle={[
+        styles.scrollViewContent,
         { backgroundColor: theme.backgroundColor },
       ]}
     >
-      <TextInput
-        style={[
-          styles.input,
-          { backgroundColor: theme.itemBackground, color: theme.textColor },
-        ]}
-        placeholder="Food Name"
-        placeholderTextColor={theme.secondaryColor}
-        value={name}
-        onChangeText={setName}
-      />
-
-      <TextInput
-        style={[
-          styles.input,
-          { backgroundColor: theme.itemBackground, color: theme.textColor },
-        ]}
-        placeholder="Calories"
-        placeholderTextColor={theme.secondaryColor}
-        value={calories}
-        onChangeText={setCalories}
-        keyboardType="numeric"
-      />
-
-      <TouchableOpacity
-        style={[styles.input, { backgroundColor: theme.itemBackground }]}
-        onPress={() => setShowDatePicker(true)}
-      >
-        <Text style={{ color: theme.textColor }}>
-          {date.toISOString().split("T")[0]}
+      <View style={styles.formContainer}>
+        <Text style={[styles.label, { color: theme.textColor }]}>
+          Food Name
         </Text>
-      </TouchableOpacity>
-
-      {showDatePicker && (
-        <DateTimePicker
-          value={date}
-          mode="date"
-          display="inline"
-          onChange={(event, selectedDate) => {
-            setShowDatePicker(false);
-            if (selectedDate) {
-              setDate(selectedDate);
-            }
-          }}
+        <TextInput
+          style={[
+            styles.input,
+            { backgroundColor: theme.itemBackground, color: theme.textColor },
+          ]}
+          placeholder="Enter food name"
+          placeholderTextColor={theme.secondaryColor}
+          value={name}
+          onChangeText={setName}
         />
-      )}
 
-      <View style={styles.buttonContainer}>
+        <Text style={[styles.label, { color: theme.textColor }]}>Calories</Text>
+        <TextInput
+          style={[
+            styles.input,
+            { backgroundColor: theme.itemBackground, color: theme.textColor },
+          ]}
+          placeholder="Enter calories"
+          placeholderTextColor={theme.secondaryColor}
+          value={calories}
+          onChangeText={setCalories}
+          keyboardType="default"
+        />
+
+        <Text style={[styles.label, { color: theme.textColor }]}>Date</Text>
         <TouchableOpacity
-          style={[styles.button, { backgroundColor: theme.secondaryColor }]}
-          onPress={() => navigation.goBack()}
+          style={[styles.dateInput, { backgroundColor: theme.itemBackground }]}
+          onPress={() => setShowDatePicker(true)}
         >
-          <Text style={[styles.buttonText, { color: theme.backgroundColor }]}>
-            Cancel
+          <Text style={[styles.dateText, { color: theme.textColor }]}>
+            {date.toISOString().split("T")[0]}
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: theme.primaryColor }]}
-          onPress={handleSave}
-        >
-          <Text style={[styles.buttonText, { color: theme.backgroundColor }]}>
-            Save
-          </Text>
-        </TouchableOpacity>
+
+        {showDatePicker && (
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display="inline"
+            onChange={(event, selectedDate) => {
+              setShowDatePicker(false);
+              if (selectedDate) {
+                setDate(selectedDate);
+              }
+            }}
+          />
+        )}
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={[styles.button, { backgroundColor: theme.secondaryColor }]}
+            onPress={() => navigation.goBack()}
+          >
+            <Text style={[styles.buttonText, { color: theme.backgroundColor }]}>
+              Cancel
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, { backgroundColor: theme.primaryColor }]}
+            onPress={handleSave}
+          >
+            <Text style={[styles.buttonText, { color: theme.backgroundColor }]}>
+              Save
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollViewContent: {
+    flexGrow: 1,
+  },
+  formContainer: {
+    padding: 20,
+    paddingTop: 40,
+  },
   input: {
     width: "100%",
     height: 40,
@@ -143,5 +158,25 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: "center",
     fontWeight: "bold",
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 5,
+    textAlign: "left",
+    alignSelf: "flex-start",
+  },
+  dateInput: {
+    width: "100%",
+    height: 40,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginBottom: 20,
+    justifyContent: "center",
+  },
+  dateText: {
+    textAlign: "left",
   },
 });
