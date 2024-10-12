@@ -12,6 +12,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { useTheme } from "../contexts/ThemeContext";
 import { useActivities } from "../contexts/ActivityContext";
 import { lightTheme, darkTheme, commonStyles } from "../styles/theme";
+import { format } from "date-fns";
 
 const activityTypes = [
   { label: "Walking", value: "Walking" },
@@ -26,13 +27,17 @@ const activityTypes = [
 export default function AddActivityScreen({ navigation }) {
   const { isDarkMode } = useTheme();
   const theme = isDarkMode ? darkTheme : lightTheme;
-  const { activities, setActivities } = useActivities();
+  const { addActivity } = useActivities();
 
   const [open, setOpen] = useState(false);
   const [activityType, setActivityType] = useState(null);
   const [duration, setDuration] = useState("");
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const formatDateWithDay = (date) => {
+    return format(date, "yyyy-MM-dd EEEE");
+  };
 
   const handleSave = () => {
     if (!activityType || !duration || !date) {
@@ -47,16 +52,16 @@ export default function AddActivityScreen({ navigation }) {
     }
 
     const newActivity = {
-      id: activities.length + 1,
+      id: Date.now(),
       name: activityType,
-      duration: `${durationNum} minutes`,
-      date: date.toISOString().split("T")[0],
+      duration: `${durationNum} mins`,
+      date: formatDateWithDay(date),
       isSpecial:
         (activityType === "Running" || activityType === "Weights") &&
         durationNum > 60,
     };
 
-    setActivities([...activities, newActivity]);
+    addActivity(newActivity);
     navigation.goBack();
   };
 
@@ -87,7 +92,7 @@ export default function AddActivityScreen({ navigation }) {
         placeholderTextColor={theme.secondaryColor}
         value={duration}
         onChangeText={setDuration}
-        keyboardType="numeric"
+        keyboardType="default"
       />
 
       <TouchableOpacity
@@ -95,7 +100,7 @@ export default function AddActivityScreen({ navigation }) {
         onPress={() => setShowDatePicker(true)}
       >
         <Text style={{ color: theme.textColor }}>
-          {date.toISOString().split("T")[0]}
+          {formatDateWithDay(date)}
         </Text>
       </TouchableOpacity>
 
