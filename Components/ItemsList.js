@@ -1,17 +1,19 @@
-import React from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
-import { useItems } from '../Contexts/ItemsContext';
+import React from "react";
+import { View, Text, FlatList, StyleSheet } from "react-native";
+import { useItems } from "../contexts/ItemsContext";
 
 const ItemsList = ({ type }) => {
   const { activities, dietItems } = useItems();
-  const data = type === 'activities' ? activities : dietItems;
+  const data = type === "activities" ? activities : dietItems;
 
   const renderItem = ({ item }) => (
     <View style={styles.item}>
       <Text style={styles.itemName}>{item.name}</Text>
       <Text style={styles.itemDate}>{item.date}</Text>
       <Text style={styles.itemDetail}>
-        {type === 'activities' ? `Duration: ${item.duration}` : `Calories: ${item.calories}`}
+        {type === "activities"
+          ? `Duration: ${item.duration}`
+          : `Calories: ${item.calories}`}
       </Text>
     </View>
   );
@@ -28,10 +30,10 @@ const ItemsList = ({ type }) => {
 
 const styles = StyleSheet.create({
   list: {
-    width: '100%',
+    width: "100%",
   },
   item: {
-    backgroundColor: '#f9f9f9',
+    backgroundColor: "#f9f9f9",
     padding: 15,
     marginVertical: 8,
     marginHorizontal: 16,
@@ -39,16 +41,16 @@ const styles = StyleSheet.create({
   },
   itemName: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   itemDate: {
     fontSize: 14,
-    color: '#666',
+    color: "#666",
     marginTop: 4,
   },
   itemDetail: {
     fontSize: 14,
-    color: '#444',
+    color: "#444",
     marginTop: 4,
   },
 });

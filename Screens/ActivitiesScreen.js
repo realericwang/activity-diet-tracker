@@ -1,6 +1,6 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import ItemsList from '../Components/ItemsList';
+import React from "react";
+import { View, StyleSheet } from "react-native";
+import ItemsList from "../components/ItemsList";
 
 export default function ActivitiesScreen() {
   return (
@@ -13,8 +13,8 @@ export default function ActivitiesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     paddingTop: 20,
   },
 });
