@@ -1,16 +1,16 @@
 export const lightTheme = {
-  backgroundColor: '#FFFFFF',
+  backgroundColor: '#eaeaea',
   textColor: '#000000',
   primaryColor: '#007AFF',
-  secondaryColor: '#5856D6',
+  secondaryColor: '#8E8E93',
   itemBackground: '#F2F2F7',
 };
 
 export const darkTheme = {
-  backgroundColor: '#1C1C1E',
+  backgroundColor: '#393e46',
   textColor: '#FFFFFF',
   primaryColor: '#0A84FF',
-  secondaryColor: '#5E5CE6',
+  secondaryColor: '#8E8E93',
   itemBackground: '#2C2C2E',
 };
 
