@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import ItemsList from '../Components/ItemsList';
 
 export default function ActivitiesScreen() {
   return (
     <View style={styles.container}>
-      <Text>Activities</Text>
+      <ItemsList type="activities" />
     </View>
   );
 }
@@ -14,5 +15,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 20,
   },
 });

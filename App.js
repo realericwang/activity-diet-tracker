@@ -8,6 +8,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import ActivitiesScreen from './Screens/ActivitiesScreen';
 import DietScreen from './Screens/DietScreen';
 import SettingsScreen from './Screens/SettingsScreen';
+import { ItemsProvider } from './Contexts/ItemsContext';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -40,15 +41,17 @@ function TabNavigator() {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen 
-          name="Main" 
-          component={TabNavigator} 
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
-      <StatusBar style="auto" />
-    </NavigationContainer>
+    <ItemsProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen 
+            name="Main" 
+            component={TabNavigator} 
+            options={{ headerShown: false }}
+          />
+        </Stack.Navigator>
+        <StatusBar style="auto" />
+      </NavigationContainer>
+    </ItemsProvider>
   );
 }
