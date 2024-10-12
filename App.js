@@ -11,6 +11,7 @@ import ActivitiesScreen from "./screens/ActivitiesScreen";
 import DietScreen from "./screens/DietScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import { ItemsProvider } from "./contexts/ItemsContext";
+import AddActivityScreen from "./screens/AddActivityScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -76,6 +77,7 @@ function AppContent() {
           component={TabNavigator}
           options={{ headerShown: false }}
         />
+        <Stack.Screen name="Add An Activity" component={AddActivityScreen} />
       </Stack.Navigator>
       <StatusBar style={isDarkMode ? "light" : "dark"} />
     </NavigationContainer>

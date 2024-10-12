@@ -1,19 +1,26 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import { useTheme } from '../contexts/ThemeContext';
-import { useItems } from '../contexts/ItemsContext';
-import { lightTheme, darkTheme, commonStyles } from '../styles/theme';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+} from "react-native";
+import DropDownPicker from "react-native-dropdown-picker";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { useTheme } from "../contexts/ThemeContext";
+import { useItems } from "../contexts/ItemsContext";
+import { lightTheme, darkTheme, commonStyles } from "../styles/theme";
 
 const activityTypes = [
-  { label: 'Walking', value: 'Walking' },
-  { label: 'Running', value: 'Running' },
-  { label: 'Swimming', value: 'Swimming' },
-  { label: 'Weights', value: 'Weights' },
-  { label: 'Yoga', value: 'Yoga' },
-  { label: 'Cycling', value: 'Cycling' },
-  { label: 'Hiking', value: 'Hiking' },
+  { label: "Walking", value: "Walking" },
+  { label: "Running", value: "Running" },
+  { label: "Swimming", value: "Swimming" },
+  { label: "Weights", value: "Weights" },
+  { label: "Yoga", value: "Yoga" },
+  { label: "Cycling", value: "Cycling" },
+  { label: "Hiking", value: "Hiking" },
 ];
 
 export default function AddActivityScreen({ navigation }) {
@@ -23,19 +30,19 @@ export default function AddActivityScreen({ navigation }) {
 
   const [open, setOpen] = useState(false);
   const [activityType, setActivityType] = useState(null);
-  const [duration, setDuration] = useState('');
+  const [duration, setDuration] = useState("");
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const handleSave = () => {
     if (!activityType || !duration || !date) {
-      Alert.alert('Invalid Input', 'Please fill in all fields.');
+      Alert.alert("Invalid Input", "Please fill in all fields.");
       return;
     }
 
     const durationNum = parseInt(duration, 10);
     if (isNaN(durationNum) || durationNum <= 0) {
-      Alert.alert('Invalid Input', 'Duration must be a positive number.');
+      Alert.alert("Invalid Input", "Duration must be a positive number.");
       return;
     }
 
@@ -43,8 +50,10 @@ export default function AddActivityScreen({ navigation }) {
       id: activities.length + 1,
       name: activityType,
       duration: `${durationNum} minutes`,
-      date: date.toISOString().split('T')[0],
-      isSpecial: (activityType === 'Running' || activityType === 'Weights') && durationNum > 60
+      date: date.toISOString().split("T")[0],
+      isSpecial:
+        (activityType === "Running" || activityType === "Weights") &&
+        durationNum > 60,
     };
 
     setActivities([...activities, newActivity]);
@@ -52,7 +61,12 @@ export default function AddActivityScreen({ navigation }) {
   };
 
   return (
-    <View style={[commonStyles.container, { backgroundColor: theme.backgroundColor }]}>
+    <View
+      style={[
+        commonStyles.container,
+        { backgroundColor: theme.backgroundColor },
+      ]}
+    >
       <DropDownPicker
         open={open}
         value={activityType}
@@ -65,7 +79,10 @@ export default function AddActivityScreen({ navigation }) {
       />
 
       <TextInput
-        style={[styles.input, { backgroundColor: theme.itemBackground, color: theme.textColor }]}
+        style={[
+          styles.input,
+          { backgroundColor: theme.itemBackground, color: theme.textColor },
+        ]}
         placeholder="Duration (minutes)"
         placeholderTextColor={theme.secondaryColor}
         value={duration}
@@ -78,7 +95,7 @@ export default function AddActivityScreen({ navigation }) {
         onPress={() => setShowDatePicker(true)}
       >
         <Text style={{ color: theme.textColor }}>
-          {date.toISOString().split('T')[0]}
+          {date.toISOString().split("T")[0]}
         </Text>
       </TouchableOpacity>
 
@@ -98,16 +115,20 @@ export default function AddActivityScreen({ navigation }) {
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          style={[styles.button, { backgroundColor: theme.primaryColor }]}
-          onPress={handleSave}
-        >
-          <Text style={[styles.buttonText, { color: theme.backgroundColor }]}>Save</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
           style={[styles.button, { backgroundColor: theme.secondaryColor }]}
           onPress={() => navigation.goBack()}
         >
-          <Text style={[styles.buttonText, { color: theme.backgroundColor }]}>Cancel</Text>
+          <Text style={[styles.buttonText, { color: theme.backgroundColor }]}>
+            Cancel
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: theme.primaryColor }]}
+          onPress={handleSave}
+        >
+          <Text style={[styles.buttonText, { color: theme.backgroundColor }]}>
+            Save
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -119,27 +140,26 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
-    width: '100%',
+    width: "100%",
     height: 40,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 20,
   },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
   },
   button: {
     padding: 10,
     borderRadius: 5,
-    width: '45%',
+    width: "45%",
   },
   buttonText: {
-    textAlign: 'center',
-    fontWeight: 'bold',
+    textAlign: "center",
+    fontWeight: "bold",
   },
 });
-

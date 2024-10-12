@@ -15,7 +15,7 @@ export default function ActivitiesScreen() {
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
-          onPress={() => navigation.navigate("AddActivity")}
+          onPress={() => navigation.navigate("Add An Activity")}
           style={{ marginRight: 15 }}
         >
           <MaterialIcons name="add" size={24} color={theme.primaryColor} />
