@@ -1,16 +1,20 @@
 import React from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import { useItems } from "../contexts/ItemsContext";
+import { useTheme } from "../contexts/ThemeContext";
+import { lightTheme, darkTheme } from "../styles/theme";
 
 const ItemsList = ({ type }) => {
   const { activities, dietItems } = useItems();
+  const { isDarkMode } = useTheme();
+  const theme = isDarkMode ? darkTheme : lightTheme;
   const data = type === "activities" ? activities : dietItems;
 
   const renderItem = ({ item }) => (
-    <View style={styles.item}>
-      <Text style={styles.itemName}>{item.name}</Text>
-      <Text style={styles.itemDate}>{item.date}</Text>
-      <Text style={styles.itemDetail}>
+    <View style={[styles.item, { backgroundColor: theme.itemBackground }]}>
+      <Text style={[styles.itemName, { color: theme.textColor }]}>{item.name}</Text>
+      <Text style={[styles.itemDate, { color: theme.secondaryColor }]}>{item.date}</Text>
+      <Text style={[styles.itemDetail, { color: theme.textColor }]}>
         {type === "activities"
           ? `Duration: ${item.duration}`
           : `Calories: ${item.calories}`}
@@ -33,7 +37,6 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   item: {
-    backgroundColor: "#f9f9f9",
     padding: 15,
     marginVertical: 8,
     marginHorizontal: 16,
@@ -45,12 +48,10 @@ const styles = StyleSheet.create({
   },
   itemDate: {
     fontSize: 14,
-    color: "#666",
     marginTop: 4,
   },
   itemDetail: {
     fontSize: 14,
-    color: "#444",
     marginTop: 4,
   },
 });

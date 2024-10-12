@@ -1,20 +1,16 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import ItemsList from "../components/ItemsList";
+import { useTheme } from "../contexts/ThemeContext";
+import { lightTheme, darkTheme, commonStyles } from "../styles/theme";
 
 export default function DietScreen() {
+  const { isDarkMode } = useTheme();
+  const theme = isDarkMode ? darkTheme : lightTheme;
+
   return (
-    <View style={styles.container}>
+    <View style={[commonStyles.container, { backgroundColor: theme.backgroundColor }]}>
       <ItemsList type="diet" />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingTop: 20,
-  },
-});

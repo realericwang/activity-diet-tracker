@@ -4,6 +4,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StatusBar } from "expo-status-bar";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { ThemeProvider, useTheme } from "./contexts/ThemeContext";
+import { lightTheme, darkTheme } from "./styles/theme";
 
 import ActivitiesScreen from "./screens/ActivitiesScreen";
 import DietScreen from "./screens/DietScreen";
@@ -14,6 +16,9 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function TabNavigator() {
+  const { isDarkMode } = useTheme();
+  const theme = isDarkMode ? darkTheme : lightTheme;
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -30,6 +35,16 @@ function TabNavigator() {
 
           return <MaterialIcons name={iconName} size={size} color={color} />;
         },
+        tabBarActiveTintColor: theme.primaryColor,
+        tabBarInactiveTintColor: theme.secondaryColor,
+        tabBarStyle: {
+          backgroundColor: theme.backgroundColor,
+          borderTopColor: theme.secondaryColor,
+        },
+        headerStyle: {
+          backgroundColor: theme.backgroundColor,
+        },
+        headerTintColor: theme.textColor,
       })}
     >
       <Tab.Screen name="Activities" component={ActivitiesScreen} />
@@ -41,17 +56,28 @@ function TabNavigator() {
 
 export default function App() {
   return (
-    <ItemsProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Main"
-            component={TabNavigator}
-            options={{ headerShown: false }}
-          />
-        </Stack.Navigator>
-        <StatusBar style="auto" />
-      </NavigationContainer>
-    </ItemsProvider>
+    <ThemeProvider>
+      <ItemsProvider>
+        <AppContent />
+      </ItemsProvider>
+    </ThemeProvider>
+  );
+}
+
+function AppContent() {
+  const { isDarkMode } = useTheme();
+  const theme = isDarkMode ? darkTheme : lightTheme;
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Main"
+          component={TabNavigator}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+      <StatusBar style={isDarkMode ? "light" : "dark"} />
+    </NavigationContainer>
   );
 }
