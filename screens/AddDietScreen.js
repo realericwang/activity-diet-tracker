@@ -12,6 +12,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { useTheme } from "../contexts/ThemeContext";
 import { useDiet } from "../contexts/DietContext";
 import { lightTheme, darkTheme } from "../styles/theme";
+import { format } from "date-fns";
 
 export default function AddDietScreen({ navigation }) {
   const { isDarkMode } = useTheme();
@@ -22,6 +23,10 @@ export default function AddDietScreen({ navigation }) {
   const [calories, setCalories] = useState("");
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const formatDateWithDay = (date) => {
+    return format(date, "yyyy-MM-dd EEE");
+  };
 
   const handleSave = () => {
     if (!name || !calories || !date) {
@@ -39,7 +44,7 @@ export default function AddDietScreen({ navigation }) {
       id: Date.now(),
       name,
       calories: caloriesNum,
-      date: date.toISOString().split("T")[0],
+      date: formatDateWithDay(date),
     };
 
     addDietItem(newDietItem);
@@ -55,20 +60,19 @@ export default function AddDietScreen({ navigation }) {
     >
       <View style={styles.formContainer}>
         <Text style={[styles.label, { color: theme.textColor }]}>
-          Food Name
+          Description *
         </Text>
         <TextInput
           style={[
             styles.input,
             { backgroundColor: theme.itemBackground, color: theme.textColor },
           ]}
-          placeholder="Enter food name"
           placeholderTextColor={theme.secondaryColor}
           value={name}
           onChangeText={setName}
         />
 
-        <Text style={[styles.label, { color: theme.textColor }]}>Calories</Text>
+        <Text style={[styles.label, { color: theme.textColor }]}>Calories *</Text>
         <TextInput
           style={[
             styles.input,
@@ -81,13 +85,13 @@ export default function AddDietScreen({ navigation }) {
           keyboardType="default"
         />
 
-        <Text style={[styles.label, { color: theme.textColor }]}>Date</Text>
+        <Text style={[styles.label, { color: theme.textColor }]}>Date *</Text>
         <TouchableOpacity
           style={[styles.dateInput, { backgroundColor: theme.itemBackground }]}
           onPress={() => setShowDatePicker(true)}
         >
           <Text style={[styles.dateText, { color: theme.textColor }]}>
-            {date.toISOString().split("T")[0]}
+            {formatDateWithDay(date)}
           </Text>
         </TouchableOpacity>
 
