@@ -10,7 +10,7 @@ import {
 import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useTheme } from "../contexts/ThemeContext";
-import { useItems } from "../contexts/ItemsContext";
+import { useActivities } from "../contexts/ActivityContext";
 import { lightTheme, darkTheme, commonStyles } from "../styles/theme";
 
 const activityTypes = [
@@ -26,7 +26,7 @@ const activityTypes = [
 export default function AddActivityScreen({ navigation }) {
   const { isDarkMode } = useTheme();
   const theme = isDarkMode ? darkTheme : lightTheme;
-  const { activities, setActivities } = useItems();
+  const { activities, setActivities } = useActivities();
 
   const [open, setOpen] = useState(false);
   const [activityType, setActivityType] = useState(null);

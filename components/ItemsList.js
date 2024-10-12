@@ -1,11 +1,13 @@
 import React from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
-import { useItems } from "../contexts/ItemsContext";
+import { useActivities } from "../contexts/ActivityContext";
+import { useDiet } from "../contexts/DietContext";
 import { useTheme } from "../contexts/ThemeContext";
 import { lightTheme, darkTheme } from "../styles/theme";
 
 const ItemsList = ({ type }) => {
-  const { activities, dietItems } = useItems();
+  const { activities } = useActivities();
+  const { dietItems } = useDiet();
   const { isDarkMode } = useTheme();
   const theme = isDarkMode ? darkTheme : lightTheme;
   const data = type === "activities" ? activities : dietItems;
@@ -19,6 +21,9 @@ const ItemsList = ({ type }) => {
           ? `Duration: ${item.duration}`
           : `Calories: ${item.calories}`}
       </Text>
+      {type === "activities" && item.isSpecial && (
+        <Text style={[styles.specialTag, { color: theme.primaryColor }]}>Special</Text>
+      )}
     </View>
   );
 
@@ -52,6 +57,11 @@ const styles = StyleSheet.create({
   },
   itemDetail: {
     fontSize: 14,
+    marginTop: 4,
+  },
+  specialTag: {
+    fontSize: 14,
+    fontWeight: 'bold',
     marginTop: 4,
   },
 });

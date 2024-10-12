@@ -9,13 +9,13 @@ import {
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useTheme } from "../contexts/ThemeContext";
-import { useItems } from "../contexts/ItemsContext";
+import { useDiet } from "../contexts/DietContext";
 import { lightTheme, darkTheme, commonStyles } from "../styles/theme";
 
 export default function AddDietScreen({ navigation }) {
   const { isDarkMode } = useTheme();
   const theme = isDarkMode ? darkTheme : lightTheme;
-  const { dietItems, setDietItems } = useItems();
+  const { dietItems, setDietItems } = useDiet();
 
   const [name, setName] = useState("");
   const [calories, setCalories] = useState("");

@@ -5,12 +5,14 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StatusBar } from "expo-status-bar";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { ThemeProvider, useTheme } from "./contexts/ThemeContext";
+import { ActivityProvider } from "./contexts/ActivityContext";
+import { DietProvider } from "./contexts/DietContext";
 import { lightTheme, darkTheme } from "./styles/theme";
 
 import ActivitiesScreen from "./screens/ActivitiesScreen";
 import DietScreen from "./screens/DietScreen";
 import SettingsScreen from "./screens/SettingsScreen";
-import { ItemsProvider } from "./contexts/ItemsContext";
+// import { ItemsProvider } from "./contexts/ItemsContext";
 import AddActivityScreen from "./screens/AddActivityScreen";
 import AddDietScreen from "./screens/AddDietScreen";
 
@@ -59,9 +61,11 @@ function TabNavigator() {
 export default function App() {
   return (
     <ThemeProvider>
-      <ItemsProvider>
-        <AppContent />
-      </ItemsProvider>
+      <ActivityProvider>
+        <DietProvider>
+          <AppContent />
+        </DietProvider>
+      </ActivityProvider>
     </ThemeProvider>
   );
 }

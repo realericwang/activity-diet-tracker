@@ -5,6 +5,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import ItemsList from "../components/ItemsList";
 import { useTheme } from "../contexts/ThemeContext";
 import { lightTheme, darkTheme, commonStyles } from "../styles/theme";
+import { useActivities } from "../contexts/ActivityContext";
 
 export default function ActivitiesScreen() {
   const { isDarkMode } = useTheme();
