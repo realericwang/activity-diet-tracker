@@ -75,7 +75,17 @@ function AppContent() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: theme.backgroundColor,
+          },
+          headerTintColor: theme.textColor,
+          headerTitleStyle: {
+            color: theme.textColor,
+          },
+        }}
+      >
         <Stack.Screen
           name="Home"
           component={TabNavigator}
